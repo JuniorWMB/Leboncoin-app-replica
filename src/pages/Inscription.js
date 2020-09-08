@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function Inscription() {
   const [email, setEmail] = useState("");
@@ -26,8 +27,17 @@ function Inscription() {
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
   };
-  const handleInscriptionSubmit = (e) => {
+  const handleInscriptionSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Les mots de passe ne sont pas identiques");
+    } else {
+      await axios.post("https://leboncoin-api.herokuapp.com/user/sign_up", {
+        email,
+        username,
+        password,
+      });
+    }
   };
 
   return (
@@ -35,20 +45,30 @@ function Inscription() {
       <form onSubmit={handleInscriptionSubmit}>
         <div>
           <label htmlFor="">Email</label>
-          <input type="text" onChange={handleEmailChange} />
+          <input type="text" value={email} onChange={handleEmailChange} />
           <br />
           <label htmlFor="">Username</label>
-          <input type="text" onChange={handleUsernameChange} />
+          <input type="text" value={username} onChange={handleUsernameChange} />
           <br />
           <label htmlFor="">Name</label>
-          <input type="text" onChange={handleUsernameChange} />
+          <input type="text" value={name} onChange={handleNameChange} />
           <br />
           <label htmlFor="">Password</label>
-          <input type="password" onChange={handlePasswordChange} />
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+
           <br />
           <label htmlFor="">Confirm Password</label>
-          <input type="password" onChange={handleConfirmPasswordChange} />
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
         </div>
+        {error && <p>{error}</p>}
         <button type="submit">S'inscrire</button>
       </form>
     </div>
