@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Offers from "./pages/Offers";
 import Offer from "./pages/Offer";
+import Inscription from "./pages/Inscription";
 import "./App.css";
 
 function App() {
@@ -11,6 +12,9 @@ function App() {
         <Switch>
           <Route path="/offer/:id">
             <Offer />
+          </Route>
+          <Route path="/inscription">
+            <Inscription />
           </Route>
           <Route path="/">
             <Offers />
