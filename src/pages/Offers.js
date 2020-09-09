@@ -22,7 +22,7 @@ function Offers() {
     };
     fecthData();
   }, [page]);
-  console.log("junior", data);
+  // console.log("junior", data);
 
   return (
     <div>
@@ -33,7 +33,7 @@ function Offers() {
           <div>
             {data.offers.map((offer, i) => {
               return (
-                <Link to={"/offer/" + offer._id}>
+                <Link key={i} to={"/offer/" + offer._id}>
                   <Offre
                     image={offer.picture}
                     title={offer.title}

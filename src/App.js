@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Offers from "./pages/Offers";
 import Offer from "./pages/Offer";
 import Inscription from "./pages/Inscription";
+import Login from "./pages/Login";
 import "./App.css";
 
 function App() {
@@ -10,15 +11,12 @@ function App() {
     <div>
       <Router>
         <Switch>
-          <Route path="/offer/:id">
-            <Offer />
-          </Route>
-          <Route path="/inscription">
-            <Inscription />
-          </Route>
-          <Route path="/">
-            <Offers />
-          </Route>
+          <Route path="/offer/:id" component={Offer} />
+          <Route path="/inscription" component={Inscription} />
+
+          <Route path="/login" component={Login} />
+
+          <Route path="/" component={Offers} />
         </Switch>
       </Router>
     </div>

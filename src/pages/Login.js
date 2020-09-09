@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import Axios from "axios";
+import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import { useHistory } from "react-router-dom";
-
-function Inscription() {
+function Login() {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
 
   //je declare mes Changes
@@ -18,32 +14,21 @@ function Inscription() {
     setEmail(e.target.value);
   };
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
   };
 
   const handleSubmitChange = async (e) => {
     e.preventDefault();
     const response = await Axios.post(
-      "https://leboncoin-api.herokuapp.com/user/sign_up",
-      { email, username, password }
+      "https://leboncoin-api.herokuapp.com/user/log_in",
+      { email, password }
     );
-    if (response.data) {
+    if (response.data.token) {
       Cookies.set("token", response.data.token);
       history.push("/");
+      console.log(response);
     }
-    if (password !== confirmPassword) {
-      setErrorMessage("mot de passe pas identique");
-    }
-    console.log(response);
   };
 
   return (
@@ -59,13 +44,6 @@ function Inscription() {
             placeholder="Email..."
           />
           <br />
-          <input
-            type="text"
-            value={username}
-            onChange={handleUsernameChange}
-            placeholder="Username..."
-          />
-          <br />
 
           <input
             type="password"
@@ -74,14 +52,6 @@ function Inscription() {
             placeholder="Password..."
           />
           <br />
-
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
-            placeholder="Confirm Password..."
-          />
-          <p>{errorMessage}</p>
         </div>
         <br />
 
@@ -91,4 +61,4 @@ function Inscription() {
   );
 }
 
-export default Inscription;
+export default Login;
